@@ -1,7 +1,7 @@
 import XCTest
 
-import composable_purchase_managerTests
+import ComposablePurchaseManagerTests
 
 var tests = [XCTestCaseEntry]()
-tests += composable_purchase_managerTests.allTests()
+tests += ComposablePurchaseManagerTests.allTests()
 XCTMain(tests)
