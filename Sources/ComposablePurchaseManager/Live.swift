@@ -33,7 +33,12 @@ extension PurchaseManager {
         
         manager.destroy = { id in
             .fireAndForget {
-                dependencies[id]?.subscriber.send(completion: .finished)
+                guard let managerDependencies = dependencies[id] else {
+                    return
+                }
+                
+                managerDependencies.queue.remove(managerDependencies.delegate)
+                managerDependencies.subscriber.send(completion: .finished)
                 dependencies[id] = nil
             }
         }
