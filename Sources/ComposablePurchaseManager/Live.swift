@@ -46,9 +46,8 @@ extension PurchaseManager {
         manager.set = { productIdentifiers, id in
             .fireAndForget {
                 let request = SKProductsRequest(productIdentifiers: Set(productIdentifiers))
+                request.delegate = dependencies[id]?.delegate
                 dependencies[id]?.request = request
-                
-                request.start()
             }
         }
         
