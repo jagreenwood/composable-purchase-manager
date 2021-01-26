@@ -88,10 +88,14 @@ class PurchaseManagerDelegate: NSObject, SKPaymentTransactionObserver, SKProduct
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
-        subscriber.send(.didFail(nil, .restoreFailed))
+        DispatchQueue.main.async {
+            self.subscriber.send(.didFail(nil, .restoreFailed))
+        }
     }
     
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        subscriber.send(.didRetrieveProducts(response.products))
+        DispatchQueue.main.async {
+            self.subscriber.send(.didRetrieveProducts(response.products))
+        }
     }
 }
