@@ -15,7 +15,7 @@ extension PurchaseManager {
         destroy: @escaping (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("destroy") },
         set: @escaping ([String], AnyHashable) -> Effect<Never, Never> = { _, _ in _unimplemented("set") },
         fetchProducts: @escaping (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("fetchProducts") },
-        purchase: @escaping (String, AnyHashable) -> Effect<Never, Never> = { _, _  in _unimplemented("purchase") },
+        purchase: @escaping (SKProduct, AnyHashable) -> Effect<Never, Never> = { _, _  in _unimplemented("purchase") },
         restore: @escaping (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("restore") }
     ) -> PurchaseManager {
         PurchaseManager(

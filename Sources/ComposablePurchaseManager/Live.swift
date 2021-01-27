@@ -57,6 +57,23 @@ extension PurchaseManager {
             }
         }
         
+        manager.purchase = { product, id in
+            return .fireAndForget {
+                guard SKPaymentQueue.canMakePayments() else {
+                    dependencies[id]?.subscriber.send(.didFail(product.productIdentifier, .cannotMakePurchases))
+                    return
+                }
+                
+                dependencies[id]?.queue.add(SKPayment(product: product))
+            }
+        }
+        
+        manager.restore = { id in
+            .fireAndForget {
+                dependencies[id]?.queue.restoreCompletedTransactions()
+            }
+        }
+        
         return manager
     }()
 }

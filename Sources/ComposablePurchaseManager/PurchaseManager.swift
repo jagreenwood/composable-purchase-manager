@@ -20,7 +20,7 @@ public struct PurchaseManager {
     
     var fetchProducts: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("fetchProducts") }
     
-    var purchase: (String, AnyHashable) -> Effect<Never, Never> = { _, _  in _unimplemented("purchase") }
+    var purchase: (SKProduct, AnyHashable) -> Effect<Never, Never> = { _, _  in _unimplemented("purchase") }
     
     var restore: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("restore") }
 }
@@ -42,8 +42,8 @@ public extension PurchaseManager {
         self.fetchProducts(id)
     }
     
-    func purchase(productID: String, id: AnyHashable) -> Effect<Never, Never> {
-        self.purchase(productID, id)
+    func purchase(product: SKProduct, id: AnyHashable) -> Effect<Never, Never> {
+        self.purchase(product, id)
     }
     
     func restore(id: AnyHashable) -> Effect<Never, Never> {
