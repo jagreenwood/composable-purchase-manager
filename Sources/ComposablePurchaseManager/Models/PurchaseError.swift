@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum PurchaseError: Equatable {
+public enum PurchaseError: Error, Equatable {
     case cannotFindProduct
     case cannotMakePurchases
     case cannotFindReceipt
