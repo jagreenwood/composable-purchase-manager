@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PurchaseManagerDelegate.swift
 //  
 //
 //  Created by Jeremy Greenwood on 1/22/21.
@@ -10,11 +10,14 @@ import ComposableArchitecture
 import StoreKit
 
 class PurchaseManagerDelegate: NSObject, SKPaymentTransactionObserver, SKProductsRequestDelegate {
+    private var didRestoreProduct = false
+    
     let subscriber: Effect<PurchaseManager.Action, Never>.Subscriber
 
     init(_ subscriber: Effect<PurchaseManager.Action, Never>.Subscriber) {
       self.subscriber = subscriber
     }
+    
     func complete(transaction: SKPaymentTransaction) {
         subscriber.send(.didCompletePurchase(transaction.payment.productIdentifier))
 
@@ -30,7 +33,8 @@ class PurchaseManagerDelegate: NSObject, SKPaymentTransactionObserver, SKProduct
             }
         }()
 
-        subscriber.send(.didCompletePurchase(productIdentifier))
+        didRestoreProduct = true
+        subscriber.send(.didRestoreProductID(productIdentifier))
         
         SKPaymentQueue.default().finishTransaction(transaction)
     }
@@ -75,7 +79,7 @@ class PurchaseManagerDelegate: NSObject, SKPaymentTransactionObserver, SKProduct
                         ReceiptValidation(
                             data: receiptData,
                             success: {
-                                self.complete(transaction: transaction)
+                                self.restore(transaction: transaction)
                             },
                             failure: {
                                 self.failed(transaction: transaction, error: .invalidReceipt)
@@ -90,8 +94,12 @@ class PurchaseManagerDelegate: NSObject, SKPaymentTransactionObserver, SKProduct
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
-        DispatchQueue.main.async {
-            self.subscriber.send(.didFail(nil, .restoreFailed))
+        subscriber.send(.didFail(nil, .restoreFailed))
+    }
+    
+    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+        if !didRestoreProduct {
+            subscriber.send(.noProductsToRestore)
         }
     }
     
