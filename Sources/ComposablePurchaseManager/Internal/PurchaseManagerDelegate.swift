@@ -40,7 +40,9 @@ class PurchaseManagerDelegate: NSObject, SKPaymentTransactionObserver, SKProduct
         case .purchasing:
             return
         default:
-            subscriber.send(.didFail(transaction.payment.productIdentifier, error))
+            if (transaction.error as? SKError)?.code != .paymentCancelled {
+                subscriber.send(.didFail(transaction.payment.productIdentifier, error))
+            }
 
             SKPaymentQueue.default().finishTransaction(transaction)
         }
