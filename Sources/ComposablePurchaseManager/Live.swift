@@ -58,7 +58,7 @@ extension PurchaseManager {
         }
         
         manager.purchase = { product, id in
-            return .fireAndForget {
+            .fireAndForget {
                 guard SKPaymentQueue.canMakePayments() else {
                     dependencies[id]?.subscriber.send(.didFail(product.productIdentifier, .cannotMakePurchases))
                     return

@@ -4,11 +4,13 @@ import StoreKit
 
 public struct PurchaseManager {
     public enum Action: Equatable {
-        case didRetrieveProducts([SKProduct])
         case didCompletePurchase(String)
         case didDeferPurchase(String)
-        case isPurchasing(String)
         case didFail(String?, PurchaseError)
+        case didRestoreProductID(String)
+        case didRetrieveProducts([SKProduct])
+        case isPurchasing(String)
+        case noProductsToRestore
         case validateReceipt(ReceiptValidation)
     }
     
