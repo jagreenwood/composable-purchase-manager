@@ -14,17 +14,17 @@ public struct PurchaseManager {
         case validateReceipt(ReceiptValidation)
     }
     
-    var create: (AnyHashable) -> Effect<Action, Never> = { _ in _unimplemented("create") }
+    var create: (AnyHashable) -> Effect<Action, Never> = { _ in .failing("create") }
 
-    var destroy: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("destroy") }
+    var destroy: (AnyHashable) -> Effect<Never, Never> = { _ in .failing("destroy") }
     
-    var set: ([String], AnyHashable) -> Effect<Never, Never> = { _, _ in _unimplemented("set") }
+    var set: ([String], AnyHashable) -> Effect<Never, Never> = { _, _ in .failing("set") }
     
-    var fetchProducts: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("fetchProducts") }
+    var fetchProducts: (AnyHashable) -> Effect<Never, Never> = { _ in .failing("fetchProducts") }
     
-    var purchase: (SKProduct, AnyHashable) -> Effect<Never, Never> = { _, _  in _unimplemented("purchase") }
+    var purchase: (SKProduct, AnyHashable) -> Effect<Never, Never> = { _, _  in .failing("purchase") }
     
-    var restore: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("restore") }
+    var restore: (AnyHashable) -> Effect<Never, Never> = { _ in .failing("restore") }
 }
 
 public extension PurchaseManager {
@@ -51,17 +51,4 @@ public extension PurchaseManager {
     func restore(id: AnyHashable) -> Effect<Never, Never> {
         self.restore(id)
     }
-}
-
-public func _unimplemented(
-  _ function: StaticString, file: StaticString = #file, line: UInt = #line
-) -> Never {
-  fatalError(
-    """
-    `\(function)` was called but is not implemented. Be sure to provide an implementation for
-    this endpoint when creating the mock.
-    """,
-    file: file,
-    line: line
-  )
 }
