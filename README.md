@@ -1,12 +1,19 @@
 # composable-purchase-manager
 
-Composable Purchase Lanager is library that bridges [the Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture) and [(Original) In-App Purchase](https://developer.apple.com/documentation/storekit/original_api_for_in-app_purchase).
+Composable Purchase Manager is library that bridges [the Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture) and [(Original) In-App Purchase](https://developer.apple.com/documentation/storekit/original_api_for_in-app_purchase).
 
 ## Features:
 
 * Fetch Products
 * Purchase Product
 * Restore Purchases
+
+---
+**NOTE**
+
+This package uses the original in-app purchase model vs the newer [StoreKit 2](https://developer.apple.com/documentation/storekit/in-app_purchase) model available in iOS 15+
+
+---
 
 ## Basic Usage
 
